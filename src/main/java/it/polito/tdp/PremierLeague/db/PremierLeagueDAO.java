@@ -117,7 +117,7 @@ public class PremierLeagueDAO {
 	public List<Adiacenze> getAdiacenze(Map<Integer,Match> idMap, int min, int mese){
 		String sql = "SELECT m1.`MatchID` as id1, m2.`MatchID` as id2, Count(*) as peso "
 				+ "FROM matches m1, matches m2, players p1, players p2, actions a1, actions a2 "
-				+ "where m1.`MatchID`=a1.`MatchID` AND m2.`MatchID`=a2.`MatchID` AND p1.`PlayerID`= a1.`PlayerID` AND p2.`PlayerID`=a2.`PlayerID` AND a1.`PlayerID`=a2.`PlayerID` AND a1.`TimePlayed`>= ? and a2.`TimePlayed`=a2.`TimePlayed` AND m1.`MatchID`>m2.`MatchID` AND Month(m1.date)=? AND Month(m2.date)=Month(m1.date) "
+				+ "where m1.`MatchID`=a1.`MatchID` AND m2.`MatchID`=a2.`MatchID` AND p1.`PlayerID`= a1.`PlayerID` AND p2.`PlayerID`=a2.`PlayerID` AND a1.`PlayerID`=a2.`PlayerID` AND a1.`TimePlayed`>= ? and a2.`TimePlayed`>= ? AND m1.`MatchID`>m2.`MatchID` AND Month(m1.date)=? AND Month(m2.date)=Month(m1.date) "
 				+ " group by id1, id2";
 		
 		List<Adiacenze> result = new ArrayList<>();
@@ -127,7 +127,8 @@ public class PremierLeagueDAO {
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, min);
-			st.setInt(2, mese);
+			st.setInt(2, min);	
+			st.setInt(3, mese);
 			ResultSet res = st.executeQuery();
 			while (res.next()) {
 				Match m1= idMap.get(res.getInt("id1"));

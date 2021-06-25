@@ -93,7 +93,7 @@ public class Model {
 		}
 		
 		for (Match m: Graphs.neighborListOf(grafo, ultimo)) {
-			if (!parziale.contains(m) && m.teamHomeID!=ultimo.teamHomeID && m.teamAwayID!=ultimo.teamAwayID && m.teamHomeID!=ultimo.teamAwayID && m.teamAwayID!=ultimo.teamHomeID) {
+			if (!parziale.contains(m) && m.teamHomeID!=ultimo.teamHomeID && m.teamAwayID!=ultimo.teamAwayID && m.teamHomeID!=ultimo.teamAwayID) {
 					parziale.add(m);
 					cerca(parziale,arrivo);
 					parziale.remove(parziale.size()-1);
